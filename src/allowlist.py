@@ -11,6 +11,9 @@ from urllib.parse import urlparse
 
 
 # Default domains for research use. Extensible via config.
+# Note: *.edu and *.ac.uk are broad by design (tens of thousands of subdomains).
+# This is a known trade-off: maximum coverage vs risk from compromised institution
+# pages. Use ~/.steenbok/allowlist.txt or STEENBOK_ALLOWED_DOMAINS to narrow.
 DEFAULT_ALLOWED = [
     "arxiv.org",
     "pubmed.ncbi.nlm.nih.gov",
@@ -22,7 +25,10 @@ DEFAULT_ALLOWED = [
     "wikipedia.org",
     "*.wikipedia.org",
     "en.wikipedia.org",
+    "www.google.com",
     "scholar.google.com",
+    "books.google.com",
+    "patents.google.com",
 ]
 
 ALLOWLIST_ENV = "STEENBOK_ALLOWED_DOMAINS"

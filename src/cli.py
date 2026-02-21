@@ -4,7 +4,6 @@ CLI for Steenbok fetch. Run: python -m src.cli fetch <url>
 
 import argparse
 import sys
-from urllib.parse import unquote
 
 from .fetch import (
     AllowlistError,
@@ -72,7 +71,7 @@ def _serve(port: int) -> None:
         url_param = request.args.get("url")
         if not url_param:
             return {"error": "missing url"}, 400
-        url = unquote(url_param)
+        url = url_param  # Flask decodes query params; no double unquote
         try:
             text = fetch(url)
             return text, 200, {"Content-Type": "text/plain; charset=utf-8"}
@@ -80,8 +79,9 @@ def _serve(port: int) -> None:
             return {"error": "URL not on allowlist"}, 403
         except URLBlockedError:
             return {"error": "URL blocked"}, 400
-        except (ExtractionError, FetchError) as e:
-            return {"error": str(e)}, 502
+        except (ExtractionError, FetchError):
+            # Detailed error already logged by fetch module
+            return {"error": "Fetch failed"}, 502
 
     print(f"[steenbok] fetch server at http://127.0.0.1:{port}/fetch?url=...")
     app.run(host="127.0.0.1", port=port, debug=False)

@@ -32,5 +32,4 @@ python -m src fetch --serve   # HTTP API on :8877
 
 ## Requirements
 
-- macOS (Safari cookies)
-- Full Disk Access for Terminal/IDE if using `browser-cookie3` (System Settings → Privacy & Security)
+- macOS (Safari cookies for Google Search Proxy)
