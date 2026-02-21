@@ -15,15 +15,20 @@ Browser automation and search tooling for research support. Designed for use wit
 ## Components
 
 - **Google Search Proxy** — Safari-style proxy for Google search. See `simple-spec.md` for the full spec.
+- **Safe Fetch** — Extract main text from URLs. Allowlist-protected, rate-limited (~5s between requests).
 - **Browser automation** — Research support (arXiv, PubMed, JSTOR, Google Scholar). See `RISK-ASSESSMENT.md` for security considerations.
 
-## Quick start (search proxy)
+## Quick start (fetch)
 
 ```bash
 pip install -r requirements.txt
-python src/search.py "your query"
-python src/search.py --serve   # HTTP API on :8877
+python -m src fetch "https://en.wikipedia.org/wiki/Steenbok"
+python -m src fetch --serve   # HTTP API on :8877
 ```
+
+**Fetch API:** `GET http://localhost:8877/fetch?url=<encoded_url>` returns plain text.
+
+**Allowlist:** Default domains include arxiv, pubmed, jstor, wikipedia, scholar, etc. Extend via `~/.steenbok/allowlist.txt` or `STEENBOK_ALLOWED_DOMAINS`.
 
 ## Requirements
 
